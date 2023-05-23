@@ -19,9 +19,13 @@ from rest_framework import routers
 from Api import views
 
 router=routers.DefaultRouter()
-router.register('api/patient/details',views.PatientAPI,basename='patient_details')
-router.register('api/appointments/list',views.AppointmentListAPI,basename='appointments')
-router.register('api/prescriptions',views.PrescriptionAPI,basename='prescription')
+router.register('api/Patient/details',views.PatientAPI,basename='patient_details')
+router.register('api/Appointment/list',views.AppointmentListAPI,basename='appointments')
+router.register('api/Prescription',views.PrescriptionAPI,basename='prescription')
+router.register('api/Employee',views.EmployeeAPI,basename='employee')
+router.register('api/Role',views.RoleAPI,basename='roles')
+router.register('api/Login',views.LoginAPI,basename='login')
+router.register('api/Pharmacy_stock',views.Pharmacy_stockAPI,basename='pharmacy_stocks')
 
 urlpatterns = [
     path('',include(router.urls)),
