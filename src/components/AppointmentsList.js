@@ -13,7 +13,7 @@ function AppointmentsList() {
   };
   
   let list=[];
-  for (let i=0;i<30;i++){
+  for (let i=0;i<3;i++){
     list[i]=details;
   }
   return (

@@ -1,5 +1,6 @@
 import React ,{ useState }from "react";
 import './NavBar.css';
+import checkup from '../checkup.png';
 
 const NavBar = () => {
 
@@ -22,7 +23,7 @@ const NavBar = () => {
     return(
         <div>
     <div className="navbar">
-    <img id="logo" src="https://www.shutterstock.com/image-vector/laptop-blank-screen-silver-color-260nw-1382811212.jpg" alt="checkup" />
+    <img id="logo" src={checkup} alt="checkup" />
     <div className="child"> 
         <img id="profile-pic" src="https://www.shutterstock.com/image-vector/laptop-blank-screen-silver-color-260nw-1382811212.jpg" alt="profile-pic" />
         <p>Sanjeev Kumar</p>
@@ -33,8 +34,8 @@ const NavBar = () => {
   
   <div className="menu">
   {state && <ul>
-      <li><button>Sign Out</button></li><hr/>
-      <li><button>Edit Profile</button></li>
+      <li><button onClick={openmenu}>Sign Out</button></li><hr/>
+      <li><button onClick={openmenu}>Edit Profile</button></li>
   </ul>}
   </div>
   </div>
