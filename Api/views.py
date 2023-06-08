@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import  viewsets
 from Api.serializers import *
 from rest_framework import status
-from django.contrib import messages
+
 
 #patients detail api
 class PatientAPI(viewsets.ViewSet):
@@ -422,8 +422,6 @@ class Pharmacy_stockAPI(viewsets.ViewSet):
         except Exception as e:
             err=str(e)
             return Response({'error':err},status=status.HTTP_400_BAD_REQUEST)
-
-
 
 
 

@@ -1,6 +1,5 @@
-from typing import Any
+
 from django.db import models
-from django.db.models.query import QuerySet
 
 
 class Base(models.Model):
@@ -34,8 +33,8 @@ class Employee(Base):
         Last_name=models.CharField(max_length=100,blank=True)
         Date_of_joining=models.DateField()
         Department=models.CharField(max_length=100)
-        Phone_number=models.PositiveBigIntegerField()
-        Email=models.EmailField()
+        Phone_number=models.PositiveBigIntegerField(unique=True)
+        Email=models.EmailField(unique=True)
 
         def __str__(self) -> str:
             return self.First_name+" "+self.Middle_name+" "+self.Last_name
@@ -47,7 +46,7 @@ class Role(Base):
     
 
 class Login(Base):
-    Username=models.CharField(max_length=200)
+    Username=models.CharField(max_length=200,unique=True)
     Password=models.CharField(max_length=200)
     role=models.ForeignKey(Role,on_delete=models.CASCADE)
     isActive=models.BooleanField()
@@ -63,8 +62,8 @@ class Patient(Base):
     Last_name=models.CharField(max_length=100,blank=True)
     Date_Of_Birth=models.DateField()
     Gender=models.CharField(max_length=20)
-    Phone=models.PositiveBigIntegerField()
-    Email=models.EmailField(max_length=200)
+    Phone=models.PositiveBigIntegerField(unique=True)
+    Email=models.EmailField(max_length=200,unique=True)
 
     def __str__(self) -> str:
          return self.First_name+" "+self.Middle_name+" "+self.Last_name
