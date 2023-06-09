@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from rest_framework import routers
-from Api import views,LoginVerificationApi
+from Api import views,LoginVerificationApi,TokenVerification
 
 router=routers.DefaultRouter()
 router.register('api/Patient/details',views.PatientAPI,basename='patient_details')
@@ -28,7 +28,7 @@ router.register('api/Role',views.RoleAPI,basename='roles')
 router.register('api/Pharmacy_stock',views.Pharmacy_stockAPI,basename='pharmacy_stocks')
 
 urlpatterns = [
-    path('api/token',LoginVerificationApi.VerifyToken,name='token_verification'),
+    path('api/token',TokenVerification.authenticate_token,name='token_verification'),
     path('api/login',LoginVerificationApi.Verify,name='login'),
     path('api/login/forgotpassword',LoginVerificationApi.ForgotPassword,name='forgotpassword'),
     path('api/login/changepassword',LoginVerificationApi.ChangePassword,name='changepassword'),
