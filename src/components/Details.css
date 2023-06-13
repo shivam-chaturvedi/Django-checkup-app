@@ -1,10 +1,10 @@
 .details{
     overflow:hidden;
-    width:40%;
-    min-width: 30vw;
-    height: 20%;
-    min-height: 38vh;
-    max-height: 45vh;
+    width:45%;
+    min-width: 35vw;
+    height: 93%;
+    /* min-height: 38vh; */
+    max-height: 35vh;
     background-color: white;
     border-radius: 20px;
     /* border: 2px solid; */
@@ -12,45 +12,87 @@
     padding: 0px;
     margin-left: 0%;
     margin-right: 0%;
-    margin-top: 1%;
+    margin-top: 0.5%;
+    margin-bottom: 0.5%;
     box-sizing: border-box;
     display: inline-block;
+    @media (max-width:767px) {
+        width: 60%;
+        height: 80%;
+        border-radius: 5px;
+        padding: 0px;
+    }
 }
 .upper{
     width:auto;
     margin: 3%;
-    height: 40%;
+    height: 34%;
     /* border: 2px solid; */
+    padding: 0px;
     display: flex;
     justify-content: space-around;
+    align-items: center;
+    margin-bottom: 1%;
+    padding: 0%;
 
 }
 .lower{
-    
+    @media (max-width:767px) {
+        font-size: 6px;
+        
+        }
     width:auto;
-    margin: 3%;
-    height: 60%;
+    height: 53%;
+    margin: 2%;
     /* border: 2px solid; */
     display: flex;
+    margin-top: 0%;
     justify-content: space-around;
 }
 
 .left{
-    padding: 2.5%;
-    width: 30%;
-    overflow: hidden;
+    @media (max-width:767px) {
+        font-size: 6px;
+        
+        }
+
+    margin-right: 2%;
+    padding: 1.5%;
+    width: 40%;
+    overflow: auto;
+    margin-top: 2%;
+    /* overflow-wrap:break-word; */
     text-align: start;
+    height: 80%;
+    /* border: 1px solid; */
+
+
+}
+
+.middle{
+    @media (max-width:767px) {
+        font-size: 6px;
+        
+        }
+    margin-right: 2%;
+    padding: 1.5%;
+    width: 40%;
+    overflow: auto;
+    margin-top: 2%;
+    /* overflow-wrap:break-word; */
+    text-align: start;
+    height: 80%;
     /* border: 1px solid; */
 
 }
-.middle{
-    margin-right: 2%;
-    padding: 2.5%;
-    width: 40%;
-    overflow-wrap:break-word;
-    text-align: start;
-    /* border: 1px solid; */
-
+.middle::-webkit-scrollbar{
+    display: none;
+}
+.right::-webkit-scrollbar{
+    display: none;
+}
+.left::-webkit-scrollbar{
+    display: none;
 }
 .right{
     margin-left: 2%;
@@ -58,14 +100,23 @@
     width: 30%;
     overflow-wrap: break-word;
     text-align: start;
+    overflow: auto;
     /* border: 1px solid; */
 
 }
-#titles-color{
+.titles-color{
+    font-size: 12px;
     color:rgba(0, 0, 0, 0.594);
 }
-
-#content{
+/* #gender{
+    font-size: 10px;
+} */
+.detail-content{
+    @media (max-width:767px) {
+        font-size: 9px;
+        font-weight: 700;
+        
+        }
     margin-top: 1%;
     font-size:12px;
     font-weight: bold;

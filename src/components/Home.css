@@ -1,6 +1,6 @@
-.middle-section{
-    display: flex;
+body {
+  background-color: #FFFFFF;
 }
-body{
-    background-color: #d4eef098;
+.PATIENT-DETAILS{
+    display: flex;
 }

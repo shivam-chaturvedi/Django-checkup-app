@@ -1,20 +1,21 @@
 import React ,{ useState }from "react";
 import './NavBar.css';
 import checkup from '../checkup.png';
+import up from '../up-arrow.png';
+import down from '../down-arrow.png';
+import profile from '../Profile-pic.png';
 
 const NavBar = () => {
 
-    let up='https://cdn-icons-png.flaticon.com/512/271/271239.png';
 
-    let down='https://cdn-icons-png.flaticon.com/128/32/32195.png';
     const[state,setstate]=useState(false);
-    const[image_url,seturl]=useState(up);
+    const[image_url,setImage_url]=useState(up);
     const openmenu=()=>{
         if(state){
-            seturl(up);
+            setImage_url(up);
         }
         else{
-            seturl(down);
+            setImage_url(down);
         }
         setstate(!state);
     
@@ -25,7 +26,7 @@ const NavBar = () => {
     <div className="navbar">
     <img id="logo" src={checkup} alt="checkup" />
     <div className="child"> 
-        <img id="profile-pic" src="https://www.shutterstock.com/image-vector/laptop-blank-screen-silver-color-260nw-1382811212.jpg" alt="profile-pic" />
+        <img id="profile-pic" src={profile} alt="profile-pic" />
         <p>Sanjeev Kumar</p>
         <img id ="menu-arrow" onClick={openmenu} src={image_url} alt="Menu"/>
          
@@ -34,8 +35,8 @@ const NavBar = () => {
   
   <div className="menu">
   {state && <ul>
-      <li><button onClick={openmenu}>Sign Out</button></li><hr/>
-      <li><button onClick={openmenu}>Edit Profile</button></li>
+      <li onClick={openmenu}>Sign Out</li><hr/>
+      <li onClick={openmenu}>Edit Profile</li>
   </ul>}
   </div>
   </div>

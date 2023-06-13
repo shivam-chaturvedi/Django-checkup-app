@@ -1,6 +1,7 @@
 import React from "react";
 import Content from "./Content";
 import "./AppointmentsList.css";
+import search_image from '../search_image.png'
 
 function AppointmentsList() {
   
@@ -13,17 +14,17 @@ function AppointmentsList() {
   };
   
   let list=[];
-  for (let i=0;i<3;i++){
+  for (let i=0;i<30;i++){
     list[i]=details;
   }
   return (
     <div>
     <div className="search-bar">
         <img
-          src="https://w7.pngwing.com/pngs/550/654/png-transparent-computer-icons-magnifying-glass-symbol-search-box-magnifying-glass-glass-logo-magnifier-thumbnail.png"
-          alt="img"
+          src={search_image}
+          alt="search"
         />
-        <input type="search" placeholder="Search by Patient's name..." />
+        <input spellCheck="false" type="search" placeholder="Search by Patient's name..." />
       </div>
       <div className="titles">
         <span>Time</span>

@@ -1,5 +1,8 @@
 import React from "react";
 import './Content.css';
+import delete_button from '../delete.png'
+
+
 
 function Content(props) {
   return (
@@ -10,7 +13,7 @@ function Content(props) {
       <span id="id">{props['id']}</span>
       <span id="condition">{props['condition']}</span>
       <img
-        src="https://media.istockphoto.com/id/928418914/vector/trash-can-garbage-can-rubbish-bin-icon.jpg?s=612x612&w=0&k=20&c=3ryjRO7fxFtK05q5NSR_4xrcVOOYMtmS2fzsmwsRchc="
+        src={delete_button}
         alt="delete"
       />
     </div>
