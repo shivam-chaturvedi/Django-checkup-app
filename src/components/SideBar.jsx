@@ -1,17 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SideBar.css";
-import calendar from '../calendar.png';
-import person from '../person.png';
+import calendar from "../components/images/calendar.png";
+import person from "../components/images/person.png";
 
-const SideBar = () => {
+const SideBar = ({ onAppointmentButton, onDetailsButton }) => {
+  const [activeButton, setactiveButton] = useState(true);
+  const handleAppointmentButton = () => {
+    setactiveButton(true);
+    onAppointmentButton();
+  };
+  const handleDetailsButton = () => {
+    setactiveButton(false);
+    onDetailsButton();
+  };
   return (
     <div className="sidebar">
-      <div className="appointments">
+      <div
+        style={
+          activeButton
+            ? { backgroundColor: "white", boxShadow: "0px 0px 10px" }
+            : null
+        }
+        onClick={handleAppointmentButton}
+        className="appointments"
+      >
         <img id="calendar" src={calendar} alt="img"></img>
         <p>Appointments</p>
       </div>
-      <div className="patient-details">
-        <img id="person" src={person} alt="img"/>
+      <div
+        style={
+          !(activeButton)
+            ? { backgroundColor: "white", boxShadow: "0px 0px 10px" }
+            : null
+        }
+        onClick={handleDetailsButton}
+        className="patient-details"
+      >
+        <img id="person" src={person} alt="img" />
         <p>Patient Details</p>
       </div>
     </div>

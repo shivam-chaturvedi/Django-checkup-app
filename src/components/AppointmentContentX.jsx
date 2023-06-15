@@ -1,9 +1,9 @@
 import React ,{useState} from "react";
 import './AppointmentContentX.css';
 import AppointmentContent from "./AppointmentContent";
-import ellipse from '../Ellipse 7.png';
-import line from '../Line 4.png';
-import ellipse2 from '../Ellipse 8.png';
+import ellipse from '../components/images/Ellipse 7.png';
+import line from '../components/images/Line 4.png';
+import ellipse2 from '../components/images/Ellipse 8.png';
 
 
 export default function AppointmentContentX(){

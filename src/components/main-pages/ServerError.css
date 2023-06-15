@@ -1,5 +1,5 @@
-.head{
-    box-shadow: 0px 0px 10px black;
+.server-error{
+    box-shadow: 0px 0px 10px ;
     width: 60%;
     height: 40%;
     display: flex;
@@ -13,5 +13,10 @@
     left: 20%;
     right: 20%;
     background-color: #05b194;
+  }
+  .server-error h1{
+    color: #015b79f3;
+  }
+  #msg{
     color: red;
-}
+  }

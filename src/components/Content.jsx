@@ -1,6 +1,6 @@
 import React from "react";
 import './Content.css';
-import delete_button from '../delete.png'
+import delete_button from '../components/images/delete.png';
 
 
 

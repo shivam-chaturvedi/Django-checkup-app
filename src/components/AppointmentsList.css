@@ -90,7 +90,7 @@
   width: 13px;
   height: 13px;
   margin: 0px 14px 0px 10px;
-  border: 2px solid #bdbdbd;
+  /* border: 2px solid #bdbdbd; */
 }
 
 .search-bar input {

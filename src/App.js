@@ -1,15 +1,18 @@
 import React from 'react';
 import { Routes,Route } from 'react-router-dom';
-import Login from './components/Login';
 import Error from './components/Error';
-import FirstPage from './components/FirstPage';
+
+// import MainPage from './components/main-pages/MainPage';
+import Home from './components/main-pages/Home';
+// import AppointmentList from './components/AppointmentsList';
+// import TextEditor from './components/main-pages/TextEditor';
+// import PatientDetail from './components/PatientDetail';
 function App() {
   
   return (
     <div>
       <Routes>
-        <Route path='/' Component={FirstPage}/>
-        <Route path='/login' Component={Login}/>
+        <Route path='/' Component={Home}/>     
         <Route path='*' element={<Error/>}/>
       </Routes>
     </div>

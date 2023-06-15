@@ -1,7 +1,7 @@
 import React from "react";
 import Content from "./Content";
 import "./AppointmentsList.css";
-import search_image from '../search_image.png'
+import search_image from '../components/images/search_image.png';
 
 function AppointmentsList() {
   
@@ -14,7 +14,7 @@ function AppointmentsList() {
   };
   
   let list=[];
-  for (let i=0;i<30;i++){
+  for (let i=0;i<10;i++){
     list[i]=details;
   }
   return (

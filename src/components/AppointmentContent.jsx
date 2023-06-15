@@ -1,7 +1,7 @@
 import React from "react";
 import './AppointmentContent.css';
-import paper from '../paper.png';
-import print from '../print.png';
+import paper from '../components/images/paper.png';
+import print from '../components/images/print.png';
 
 export default function AppointmentContent(){
 return(

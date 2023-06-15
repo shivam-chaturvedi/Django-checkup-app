@@ -34,9 +34,7 @@
   align-items: center;
   justify-content: center;
 }
-.appointments:active{
-  background-color: white;
-}
+
 .patient-details {
   @media(max-width:767px) {
     top:20vh;
@@ -57,11 +55,11 @@
   align-items: center;
 }
 .appointments:hover {
-  background-color: white;
+  background-color: rgba(7, 181, 132, 0.100);
   box-shadow: 0px 0px 10px;
 }
 .patient-details:hover {
-  background-color: white;
+  background-color: rgba(7, 181, 132, 0.100);
   box-shadow: 0px 0px 10px;
  }
  
