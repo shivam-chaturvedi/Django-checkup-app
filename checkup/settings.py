@@ -79,7 +79,9 @@ CORS_ALLOW_HEADERS = [
     'Accept-Language',
     'Content-Type',
     'Authorization',
+    'X-Refresh-Token',
 ]
+
 
 ##################
 

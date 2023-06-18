@@ -6,6 +6,13 @@ class Employee_Serializer(serializers.ModelSerializer):
         model=Employee
         fields="__all__"
 
+    def validate(self,data):
+        phone=data.get('Phone_number')
+        if(len(str(phone))<10):
+            raise serializers.ValidationError("Phone number must be 10 digits")
+        return data
+
+
 class Role_Serializer(serializers.ModelSerializer):
     class Meta:
         model=Role
@@ -16,16 +23,31 @@ class Login_Serializer(serializers.ModelSerializer):
         model=Login
         fields="__all__"
 
-class Patient_Serializer(serializers.ModelSerializer):
+
+class Patient_Name_id_Serializer(serializers.ModelSerializer):
     class Meta:
         model=Patient
-        fields="__all__"
+        fields=["id","First_name","Middle_name","Last_name","Unique_Id"]
 
 class AppointmentList_Serializer(serializers.ModelSerializer):
+    Patient=Patient_Name_id_Serializer()
+    Time=serializers.TimeField(format="%I:%M %p")
     class Meta:
         model=AppointmentList
-        fields="__all__"
+        fields=["Patient","Date","Time","Condition"]
 
+class AppointmentHistory_Serializer(serializers.ModelSerializer):
+    Time=serializers.TimeField(format="%I:%M %p")
+    class Meta:
+        model=AppointmentList
+        fields=["Date","Time"]
+
+class Patient_Serializer(serializers.ModelSerializer):
+    appointments=AppointmentHistory_Serializer(many=True)
+    class Meta:
+        model=Patient
+        exclude=["created_at","updated_at","is_deleted"]
+    
 class Prescription_Serializer(serializers.ModelSerializer):
     class Meta:
         model=Prescription

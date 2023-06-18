@@ -17,10 +17,11 @@ from django.contrib import admin
 from django.urls import path,include
 from rest_framework import routers
 from Api import views,LoginVerificationApi,TokenVerification
+from Api import AppointmentListApi,PatientDetailApi
 
 router=routers.DefaultRouter()
 router.register('api/Patient/details',views.PatientAPI,basename='patient_details')
-router.register('api/Appointment',views.AppointmentListAPI,basename='appointments')
+# router.register('api/appointment',AppointmentListApi,basename='appointments')
 router.register('api/Prescription',views.PrescriptionAPI,basename='prescription')
 router.register('api/Employee',views.EmployeeAPI,basename='employee')
 router.register('api/Role',views.RoleAPI,basename='roles')
@@ -28,6 +29,8 @@ router.register('api/Role',views.RoleAPI,basename='roles')
 router.register('api/Pharmacy_stock',views.Pharmacy_stockAPI,basename='pharmacy_stocks')
 
 urlpatterns = [
+    path('api/appointments',AppointmentListApi.list),
+    path('api/patient/details',PatientDetailApi.detail),
     path('api/token',TokenVerification.authenticate_token,name='token_verification'),
     path('api/login',LoginVerificationApi.Verify,name='login'),
     path('api/login/forgotpassword',LoginVerificationApi.ForgotPassword,name='forgotpassword'),

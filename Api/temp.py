@@ -50,15 +50,49 @@
 # # Print or use the generated access token
 # print(access_token)
 
-from datetime import datetime,timedelta
-import pytz,tzlocal
-local_tz=tzlocal.get_localzone()
-print(local_tz)
-print(pytz.timezone(str(local_tz)))
-t=datetime.now().timestamp()
-print(datetime.now())
-print(datetime.fromtimestamp(t))
+# from datetime import datetime,timedelta
+# import pytz,tzlocal
+# local_tz=tzlocal.get_localzone()
+# print(local_tz)
+# print(pytz.timezone(str(local_tz)))
+# t=datetime.now().timestamp()
+# print(datetime.now())
+# print(datetime.fromtimestamp(t))
 
 
 
 # print(timedelta(days=2)+datetime.utcnow())
+
+# from django.contrib.auth.hashers import make_password,check_password
+# # from django.conf import setting
+# import os
+# # import checkup.settings as s
+
+# import sys
+# import os
+
+# # Add the path to the project directory
+# project_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+# print(project_path)
+# # sys.path.append(project_path)
+# import sys
+# print(sys.path)
+
+
+# # Now you can import your project module
+
+# # import checkup
+# # print(s.ALLOWED_HOSTS)
+
+# print(os.environ.get('DJANGO_SETTINGS_MODULE'))
+
+# print(os.path.dirname(__file__))
+# data="shiavm"
+# # print(s.ALLOWED_HOSTS)
+
+
+# from checkup import settings
+# from django.contrib.auth.hashers import make_password,check_password
+# data="shivam"
+# # print(make_password(data))
+# # print(check_password('shivam',"pbkdf2_sha256$600000$aeRMiYCdea4EMbHHfatNvU$l70dppxPjV0+xfAbACsJW2Z23kGN5IyvZS0l99hqfQ4="))

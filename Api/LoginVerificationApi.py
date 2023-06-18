@@ -1,15 +1,13 @@
 from django.http import JsonResponse
 from rest_framework import status
 from Api.models import Login
-from Api.serializers import Login_Serializer
 from django.views.decorators.csrf import csrf_exempt
 import io
-from django.contrib.auth import authenticate
 from rest_framework.parsers import JSONParser
-from datetime import datetime,timedelta
-from django.conf import settings
-from Api.TokenVerification import generate_access_token,generate_refresh_token
-import jwt
+from django.contrib.auth.hashers import check_password
+from Api.TokenVerification import generate_access_token,generate_refresh_token    
+
+
 
 
 
@@ -26,7 +24,7 @@ def Verify(request):
 
             login=Login.get_object(employee_id__Email=email)
             Password=login.Password
-            if(str(Password)==password):
+            if(check_password(str(password),str(Password))):
                 access_token = generate_access_token(login)
                 refresh_token = generate_refresh_token(login)
                 return JsonResponse(

@@ -1,9 +1,16 @@
 
+from typing import Iterable, Optional
 from django.db import models
+import sys,os
+from django.contrib.auth.hashers import make_password
+
+def hash_password(password):
+    sys.path.append(os.path.abspath(os.path.dirname( os.path.join(__file__,'..'))))#this is for environment variable checkup.setting DJANGO_SETTINGS_MODULE error resolve
+    return make_password(password)
+
 
 
 class Base(models.Model):
-    
     readonly_fields=['created_at','updated_at']
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -53,15 +60,20 @@ class Login(Base):
     employee_id=models.ForeignKey(Employee,on_delete=models.CASCADE)
     def __str__(self) -> str:
          return self.Username
+    
+    def save(self, *args,**kwargs):
+         self.Password=hash_password(self.Password)
+         return super().save(*args,**kwargs)
         
 
 class Patient(Base):
+    GENDER_CHOICES=[('male','Male'),('female','Female'),('other','Other')]
     Unique_Id=models.CharField(max_length=15,unique=True)
     First_name=models.CharField(max_length=100)
     Middle_name=models.CharField(max_length=100,blank=True)
     Last_name=models.CharField(max_length=100,blank=True)
     Date_Of_Birth=models.DateField()
-    Gender=models.CharField(max_length=20)
+    Gender=models.CharField(max_length=20,choices=GENDER_CHOICES)
     Phone=models.PositiveBigIntegerField(unique=True)
     Email=models.EmailField(max_length=200,unique=True)
 
@@ -70,12 +82,14 @@ class Patient(Base):
 
 
 class AppointmentList(Base):
-    Patient=models.ForeignKey(Patient,on_delete=models.CASCADE)
+    TYPE_CHOICES=[('offline','Offline'),('online','Online')]
+    SHIFT_CHOICES=[('morning','Morning'),('evening','Evening')]
+    Patient=models.ForeignKey(Patient,on_delete=models.CASCADE,related_name="appointments")
     Date=models.DateField()
     Time=models.TimeField()
     Condition=models.CharField(max_length=200,default='No Condition Specified')
-    Shift=models.CharField(max_length=50)
-    Appointment_type=models.CharField(max_length=20)
+    Shift=models.CharField(max_length=20,choices=SHIFT_CHOICES)
+    Appointment_type=models.CharField(max_length=20,choices=TYPE_CHOICES)
     def __str__(self) -> str:
          return self.Patient.First_name
 
