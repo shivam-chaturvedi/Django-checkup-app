@@ -5,20 +5,7 @@ import "./TextEditor.css";
 
 const TextEditor = ({ onSave }) => {
   const [content, setContent] = useState("");
-  const [dragging, setdragging] = useState(false);
-  const [position, setPosition] = useState({ x: 200, y: 200 });
-  const [startPosition, setStartPosition] = useState({ x: 0, y: 0});
 
-  const handleMouseMove = (e) => {
-    if (!dragging) return;
-    const deltaX = e.clientX - startPosition.x;
-    const deltaY = e.clientY - startPosition.y;
-    setPosition((prevPosition) => ({
-      x: prevPosition.x + deltaX,
-      y: prevPosition.y + deltaY,
-    }));
-    setStartPosition({ x: e.clientX, y: e.clientY });
-  };
 
   const handleChange = (value) => {
     setContent(value);
@@ -48,16 +35,7 @@ const TextEditor = ({ onSave }) => {
   };
 
   return (
-    <div
-      style={{ top: position.y, left: position.x }}
-      onMouseDown={(e) => {
-        setdragging(true);
-        setStartPosition({ x: e.clientX, y: e.clientY });
-      }}
-      onMouseUp={() => setdragging(false)}
-      onMouseMove={handleMouseMove}
-      className="text-editor-container"
-    >
+    <div className="text-editor-container">
       <ReactQuill
         value={content}
         onChange={handleChange}

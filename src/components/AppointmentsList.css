@@ -1,13 +1,14 @@
+
 .container {
   @media (max-width: 767px) {
-    width: 110%;
+    width: 70vw;
     height: 60vh;
   }
   width: 80vw;
   height: 60vh;
   /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.315); */
   display: flex;
-  /* border: 0.2px dashed; */
+  /* border: 2px dashed; */
   margin-top: 1.4vh;
   margin-left: 2.4vw;
   margin-right: 2.5vw;
@@ -16,7 +17,7 @@
   flex-direction: column;
   /* border-radius: 10px; */
   background: #ffffff;
-  box-shadow: 0px 12px 15px rgba(0, 0, 0, 0.03);
+  box-shadow: 0px 12px 15px rgba(0, 0, 0, 0.3);
   border-radius: 24px;
   /* overflow: scroll; */
 }
@@ -25,7 +26,7 @@
 }
 .titles {
   @media (max-width: 767px) {
-    width: 100%;
+    width: 90%;
     font-size: 10px;
     justify-content: space-evenly;
   }
@@ -47,10 +48,13 @@
   border-radius: 0px;
 }
 .titles span:first-child {
-  margin-left: 4px;
+  margin-left: 1.2%;
+  @media (max-width:767px) {
+    margin-left: 0px;
+  }
 }
 .titles span:last-child {
-  margin-right: 25%;
+  margin-right: 20%;
   @media (max-width:767px) {
     margin-right: 8%;
     
@@ -59,7 +63,7 @@
 .search-bar {
   @media (max-width: 767px) {
     width: 90%;
-    font-size: 10px;
+    font-size: 14px;
     margin-top: 1vh;
     margin-bottom: 3vh;
   }
@@ -96,7 +100,7 @@
 .search-bar input {
 
   @media (max-width:767px) {
-    font-size: 12px;
+    font-size: 14px;
   }
   background-color: rgba(0, 0, 0, 0);
   margin-top: 0%;
@@ -115,3 +119,14 @@
 
 }
 
+#empty-array-msg{
+  position: absolute;
+  @media (max-width:767px) {
+    position: absolute;
+    /* left:10%; */
+    /* top:20%; */
+  }
+  left:43%;
+  top:51%;
+  color: rgba(0, 0, 0, 0.265);
+}
