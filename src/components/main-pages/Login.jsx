@@ -12,8 +12,6 @@ function LoginForm() {
   const [HomePage,setHomePage]=useState(false);
   const [buffering,setbuffering]=useState(false);
 
-  
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setbuffering(true);

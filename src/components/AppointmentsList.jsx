@@ -65,6 +65,7 @@ function AppointmentsList() {
 
           return hourIn24Format.toString().padStart(2, "0") + ":" + minute;
         }
+        // console.log(sortedAppointments)
         setlist(sortedAppointments);
         setfilteredlist(sortedAppointments);
       } else {
@@ -113,7 +114,8 @@ function AppointmentsList() {
               }
               time={item.Time}
               date={item.Date}
-              id={item.Patient.Unique_Id}
+              id={item.id}
+              Unique_Id={item.Patient.Unique_Id}
               condition={item.Condition}
             />
           ))}

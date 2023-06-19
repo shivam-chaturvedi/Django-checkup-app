@@ -47,7 +47,7 @@ function MainPage() {
       // console.log(error);
     }
   };
-
+  
   useEffect(() => {
     if (localStorage.getItem("access_token") === null) {
       setbuffering(false);
