@@ -1,4 +1,5 @@
 .sidebar {
+  /* user-select: none; */
   /* for mobile devices */
   @media(max-width:767px) {
     width:30vw;
@@ -40,7 +41,7 @@
     top:20vh;
     font-size: 10px;
 }
-
+/* user-select: none; */
 
   cursor: pointer;
   width: 90%;

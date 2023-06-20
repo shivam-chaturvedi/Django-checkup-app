@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 import "./SideBar.css";
 import calendar from "../components/images/calendar.png";
 import person from "../components/images/person.png";
 
-const SideBar = ({ onAppointmentButton, onDetailsButton }) => {
+const SideBar = ({ onAppointmentButton, onDetailsButton ,setDetailButtonState}) => {
   const [activeButton, setactiveButton] = useState(true);
+
+  useEffect(()=>{
+    setDetailButtonState(setactiveButton);
+
+  },[setDetailButtonState]);
+
   const handleAppointmentButton = () => {
     setactiveButton(true);
     onAppointmentButton();
@@ -28,6 +34,7 @@ const SideBar = ({ onAppointmentButton, onDetailsButton }) => {
         <p>Appointments</p>
       </div>
       <div
+      
         style={
           !(activeButton)
             ? { backgroundColor: "white", boxShadow: "0px 0px 10px" }

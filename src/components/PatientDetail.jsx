@@ -6,7 +6,7 @@ import Notes from "./Notes";
 import AppointmentHistory from "./AppointmentHistory";
 import TextEditor from "./main-pages/TextEditor";
 
-export default function PatientDetail() {
+export default function PatientDetail(props) {
   const [isTextEditorVisible, setIsTextEditorVisible] = useState(false);
   const textEditorRef = useRef(null);
 
@@ -41,14 +41,17 @@ export default function PatientDetail() {
           <TextEditor onSave={handleSaveTextEditor} />
         </div>
       )}
-      <div style={isTextEditorVisible?{filter:"blur(5px)"}:null} className="parent">
+      <div
+        style={isTextEditorVisible ? { filter: "blur(5px)" } : null}
+        className="parent"
+      >
         <button onClick={handleClick}>Add Prescription</button>
         <div className="two">
-          <History />
-          <Details />
+          <History upcoming={props.appointment_history.upcomingAppointments} past={props.appointment_history.pastAppointments} />
+          <Details details={props.patientDetails} />
           <Notes />
         </div>
-        <AppointmentHistory />
+        <AppointmentHistory appointments={props.patientDetails['appointments']} />
       </div>
     </>
   );

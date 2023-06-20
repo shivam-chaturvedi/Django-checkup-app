@@ -3,9 +3,27 @@ import Content from "./Content";
 import "./AppointmentsList.css";
 import search_image from "../components/images/search_image.png";
 
-function AppointmentsList() {
+
+function convertTo24HourFormat(time) {
+  const [hour, minute] = String(time).slice(0, -2).split(":");
+  const period = String(time).slice(-2);
+  let hourIn24Format = parseInt(hour);
+
+  if (period.toLowerCase() === "pm" && hourIn24Format !== 12) {
+    hourIn24Format += 12;
+  }
+
+  return hourIn24Format.toString().padStart(2, "0") + ":" + minute;
+}
+
+function AppointmentsList(props) {
   const [list, setlist] = useState([]);
   const [filteredlist, setfilteredlist] = useState(list);
+
+  
+  function onContentClick(appointment_id,patient_id){
+    props.onContentClick(appointment_id,patient_id);
+  }
 
   const handleSearch = (e) => {
     let query = e.target.value;
@@ -54,18 +72,7 @@ function AppointmentsList() {
           );
         });
 
-        function convertTo24HourFormat(time) {
-          const [hour, minute] = String(time).slice(0, -2).split(":");
-          const period = String(time).slice(-2);
-          let hourIn24Format = parseInt(hour);
-
-          if (period.toLowerCase() === "pm" && hourIn24Format !== 12) {
-            hourIn24Format += 12;
-          }
-
-          return hourIn24Format.toString().padStart(2, "0") + ":" + minute;
-        }
-        // console.log(sortedAppointments)
+                // console.log(sortedAppointments)
         setlist(sortedAppointments);
         setfilteredlist(sortedAppointments);
       } else {
@@ -104,6 +111,7 @@ function AppointmentsList() {
         <div className="container">
           {filteredlist.map((item, index) => (
             <Content
+              onContentClick={onContentClick}
               key={index}
               name={
                 item.Patient.First_name +
@@ -115,6 +123,7 @@ function AppointmentsList() {
               time={item.Time}
               date={item.Date}
               id={item.id}
+              patient_id={item.Patient.id}
               Unique_Id={item.Patient.Unique_Id}
               condition={item.Condition}
             />
@@ -125,3 +134,4 @@ function AppointmentsList() {
   );
 }
 export default AppointmentsList;
+export {convertTo24HourFormat}

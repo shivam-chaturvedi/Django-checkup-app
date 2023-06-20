@@ -18,11 +18,11 @@ function MainPage() {
           Authorization: "Bearer " + localStorage.getItem("access_token"),
         },
       });
-      const resdata = await response.json();
+      // const resdata = await response.json();
       if (response.ok) {
         setbuffering(false);
         setfirstPage(false);
-        console.log(resdata);
+        // console.log(resdata);
       } else {
         const response2 = await fetch("http://127.0.0.1:8000/api/token", {
           method: "GET",

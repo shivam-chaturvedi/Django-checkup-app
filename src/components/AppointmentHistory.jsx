@@ -1,23 +1,25 @@
-import React from "react";
-import './AppointmentHistory.css';
+import React, { useEffect, useState } from "react";
+import "./AppointmentHistory.css";
 import AppointmentContentX from "./AppointmentContentX";
 
-export default function AppointmentHistory() {
+export default function AppointmentHistory(props) {
+  const [previousAppointments, setpreviousAppointments] = useState([]);
+  useEffect(() => {
+    setpreviousAppointments(props.appointments);
+    // console.log(previousAppointments);
+  }, [previousAppointments,props]);
 
   return (
     <div className="aparent">
-    <div className="appointment-history">
-      <h4>Appointment History</h4>
-      <div className="scrollbar">
-        <AppointmentContentX/>
-        <AppointmentContentX/>
-        <AppointmentContentX/>
-        <AppointmentContentX/>
-        <AppointmentContentX/>
-        <AppointmentContentX/>
+      <div className="appointment-history">
+        <h4>Appointment History</h4>
+        <div className="scrollbar">
+          {previousAppointments.map((item, index) => {
+            // console.log(item.Date,item.Time);
+            return <AppointmentContentX key={index} date={item.Date} time={item.Time}/>;
+          })}
+        </div>
       </div>
     </div>
-    </div> 
   );
 }
-

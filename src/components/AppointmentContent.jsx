@@ -3,12 +3,12 @@ import './AppointmentContent.css';
 import paper from '../components/images/paper.png';
 import print from '../components/images/print.png';
 
-export default function AppointmentContent(){
+export default function AppointmentContent({date,time}){
 return(
 <div className="appointment-content">
       <div className="datetime">
-        <span id="appointment-date">26 Nov'19</span>
-        <span id="appointment-time">09.00 -10.00</span>
+        <span id="appointment-date">{date}</span>
+        <span id="appointment-time">{time}</span>
       </div>
       <div className="treatment">
         <span id="treat">Treatment</span>
