@@ -5,9 +5,15 @@ import AppointmentContentX from "./AppointmentContentX";
 export default function AppointmentHistory(props) {
   const [previousAppointments, setpreviousAppointments] = useState([]);
   useEffect(() => {
+    if(!props.appointments){
+      setpreviousAppointments([]);
+    }
+    else{
     setpreviousAppointments(props.appointments);
+    }
+    
     // console.log(previousAppointments);
-  }, [previousAppointments,props]);
+  }, [props]);
 
   return (
     <div className="aparent">

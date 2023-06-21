@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Content from "./Content";
 import "./AppointmentsList.css";
 import search_image from "../components/images/search_image.png";
-
+import { DOMAIN_NAME } from "./main-pages/config";
 
 function convertTo24HourFormat(time) {
   const [hour, minute] = String(time).slice(0, -2).split(":");
@@ -20,9 +20,8 @@ function AppointmentsList(props) {
   const [list, setlist] = useState([]);
   const [filteredlist, setfilteredlist] = useState(list);
 
-  
-  function onContentClick(appointment_id,patient_id){
-    props.onContentClick(appointment_id,patient_id);
+  function onContentClick(appointment_id, patient_id) {
+    props.onContentClick(appointment_id, patient_id);
   }
 
   const handleSearch = (e) => {
@@ -48,20 +47,21 @@ function AppointmentsList(props) {
     setfilteredlist(temp);
   };
 
-  const fetchData = async () => {
+  const fetchAppointments = async () => {
     try {
       const currentdate = new Date();
-      const date =
+      let date =
         currentdate.getFullYear().toString() +
         "-" +
         (currentdate.getMonth() + 1).toString().padStart(2, "0") +
         "-" +
         currentdate.getDate().toString().padStart(2, "0");
-
+      // date="2023-06-23";
       const response = await fetch(
-        "http://127.0.0.1:8000/api/appointments?date=" + date
+        DOMAIN_NAME + "/api/appointments?date=" + date
       );
       const resData = await response.json();
+      // console.log(resData);
       if (response.ok) {
         let temp = resData["success"];
         const sortedAppointments = temp.sort((a, b) => {
@@ -72,9 +72,24 @@ function AppointmentsList(props) {
           );
         });
 
-                // console.log(sortedAppointments)
+        // console.log(sortedAppointments)
         setlist(sortedAppointments);
         setfilteredlist(sortedAppointments);
+        // console.log(sortedAppointments);
+
+        if (sortedAppointments !== []) {
+          if(sessionStorage.getItem('first_loaded')==="true"){
+            sessionStorage.setItem(
+              "defaultPatient",
+              sortedAppointments[0].Patient.id
+            );
+            
+            sessionStorage.setItem('first_loaded',false);
+          }
+          
+        } else {
+          console.log("empty");
+        }
       } else {
         console.log(resData["error"]);
       }
@@ -84,7 +99,7 @@ function AppointmentsList(props) {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchAppointments();
   }, []);
 
   return (
@@ -111,6 +126,8 @@ function AppointmentsList(props) {
         <div className="container">
           {filteredlist.map((item, index) => (
             <Content
+              appointments_list={list}
+              fetchAppointments={fetchAppointments}
               onContentClick={onContentClick}
               key={index}
               name={
@@ -134,4 +151,4 @@ function AppointmentsList(props) {
   );
 }
 export default AppointmentsList;
-export {convertTo24HourFormat}
+export { convertTo24HourFormat };

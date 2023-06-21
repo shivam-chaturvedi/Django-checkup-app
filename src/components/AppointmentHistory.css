@@ -2,6 +2,7 @@
   width: 95%;
   height: 100%;
   /* border: 2px solid; */
+  max-height: 50vh;
   border-radius: 10px;
   box-sizing: border-box;
   box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.932);
@@ -12,7 +13,7 @@
   background-color: white;
   @media (max-width: 767px) {
     /* width: 150vw; */
-    margin-top: 10%;
+    /* margin-top: 10%; */
     height: 100%;
   }
 }

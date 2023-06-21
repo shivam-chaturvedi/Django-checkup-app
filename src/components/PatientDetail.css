@@ -4,6 +4,7 @@
   /* border: 2px solid; */
   margin-bottom: 1%;
   height: 40%;
+  max-height: 35vh;
   align-items: center;
   overflow: hidden;
   @media (max-width: 767px) {
@@ -57,4 +58,11 @@
   width: 85%;
   /* border: 2px solid; */
   box-sizing: border-box;
+}
+
+#no-appointments-msg{
+position: absolute;
+left:40%;
+top:40%;
+color: rgba(0, 0, 0, 0.201);
 }

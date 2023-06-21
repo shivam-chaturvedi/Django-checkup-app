@@ -8,11 +8,14 @@ const SideBar = ({ onAppointmentButton, onDetailsButton ,setDetailButtonState}) 
 
   useEffect(()=>{
     setDetailButtonState(setactiveButton);
-
+    if(sessionStorage.getItem('AppointmentPage')==="false"){
+      setactiveButton(false);
+    }
   },[setDetailButtonState]);
 
   const handleAppointmentButton = () => {
     setactiveButton(true);
+    sessionStorage.setItem('AppointmentPage',true);
     onAppointmentButton();
   };
   const handleDetailsButton = () => {
