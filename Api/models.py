@@ -1,4 +1,4 @@
-
+from collections.abc import Iterable
 from typing import Iterable, Optional
 from django.db import models
 import sys,os
@@ -24,9 +24,11 @@ class Base(models.Model):
     def restore(self):
          self.is_deleted=False
          self.save()
+
     @classmethod
     def get_all_objects(cls,*args,**kwargs):
          return cls.objects.filter(*args,**kwargs,is_deleted=False)
+    
     @classmethod
     def get_object(cls,*args,**kwargs):
          return cls.objects.get(*args,**kwargs,is_deleted=False)
@@ -76,29 +78,53 @@ class Patient(Base):
     Gender=models.CharField(max_length=20,choices=GENDER_CHOICES)
     Phone=models.PositiveBigIntegerField(unique=True)
     Email=models.EmailField(max_length=200,unique=True)
+    Address=models.CharField(max_length=500)
+    Age=models.PositiveIntegerField()
 
     def __str__(self) -> str:
          return self.First_name+" "+self.Middle_name+" "+self.Last_name
+    
+    def soft_delete(self):
+         self.is_deleted=True
+         self.appointments.update(is_deleted=True)
+         self.save()
+
+    def restore(self):
+         self.is_deleted=False
+         self.appointments.update(is_deleted=False)
+         self.save()
 
 
 class AppointmentList(Base):
-    TYPE_CHOICES=[('offline','Offline'),('online','Online')]
-    SHIFT_CHOICES=[('morning','Morning'),('evening','Evening')]
-    Patient=models.ForeignKey(Patient,on_delete=models.CASCADE,related_name="appointments")
-    Date=models.DateField()
-    Time=models.TimeField()
-    Condition=models.CharField(max_length=200,default='No Condition Specified')
-    Shift=models.CharField(max_length=20,choices=SHIFT_CHOICES)
-    Appointment_type=models.CharField(max_length=20,choices=TYPE_CHOICES)
-    def __str__(self) -> str:
+     TYPE_CHOICES=[('offline','Offline'),('online','Online')]
+     SHIFT_CHOICES=[('morning','Morning'),('evening','Evening')]
+     Patient=models.ForeignKey(Patient,on_delete=models.CASCADE,related_name="appointments")
+     Date=models.DateField()
+     Time=models.TimeField()
+     Condition=models.CharField(max_length=200,default='No Condition Specified')
+     Shift=models.CharField(max_length=20,choices=SHIFT_CHOICES)
+     Appointment_type=models.CharField(max_length=20,choices=TYPE_CHOICES)
+     Note=models.TextField(blank=True)
+
+     def __str__(self) -> str:
          return self.Patient.First_name
+    
+     def soft_delete(self):
+         self.is_deleted=True
+         self.prescription_set.update(is_deleted=True)
+         self.save()
+
+     def restore(self):
+          self.prescription_set.update(is_deleted=False)
+          return super().restore()
+     
 
 
 class Prescription(Base):
-    Patient=models.ForeignKey(Patient,on_delete=models.CASCADE)
-    Prescribed_medicine=models.CharField(max_length=500)
+    Appointment=models.ForeignKey(AppointmentList,on_delete=models.CASCADE)
+    Prescribed_medicines=models.TextField(default="No Medicine Prescribed")
     def __str__(self) -> str:
-         return self.Prescribed_medicine
+         return self.Prescribed_medicines
 
 class Pharmacy_stock(Base):
      Medicine=models.CharField(max_length=200)

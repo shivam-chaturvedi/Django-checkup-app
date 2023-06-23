@@ -34,13 +34,13 @@ class AppointmentList_Serializer(serializers.ModelSerializer):
     Time=serializers.TimeField(format="%I:%M %p")
     class Meta:
         model=AppointmentList
-        fields=["Patient","Date","Time","Condition"]
+        fields=["id","Patient","Date","Time","Condition",'Note']
 
 class AppointmentHistory_Serializer(serializers.ModelSerializer):
     Time=serializers.TimeField(format="%I:%M %p")
     class Meta:
         model=AppointmentList
-        fields=["Date","Time"]
+        fields=["Date","Time",'id','Note']
 
 class Patient_Serializer(serializers.ModelSerializer):
     appointments=AppointmentHistory_Serializer(many=True)

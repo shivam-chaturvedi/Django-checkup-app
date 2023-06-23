@@ -30,9 +30,14 @@ router.register('api/Pharmacy_stock',views.Pharmacy_stockAPI,basename='pharmacy_
 
 urlpatterns = [
     path('api/appointments',AppointmentListApi.list),
-    path('api/patient/details',PatientDetailApi.detail),
+    path('api/appointment/note/save/<int:pk>',AppointmentListApi.save_note),
+    path('api/appointment/note/get/<int:pk>',AppointmentListApi.get_note),
+    path('api/patient/<int:pk>',PatientDetailApi.get_patient),
+    path('api/patients',PatientDetailApi.get_all_patients),
+    path('api/patient/get_unique_id',PatientDetailApi.get_unique_id),
     path('api/token',TokenVerification.authenticate_token,name='token_verification'),
     path('api/login',LoginVerificationApi.Verify,name='login'),
+    path('api/appointment/cancel',AppointmentListApi.cancel),
     path('api/login/forgotpassword',LoginVerificationApi.ForgotPassword,name='forgotpassword'),
     path('api/login/changepassword',LoginVerificationApi.ChangePassword,name='changepassword'),
     path('',include(router.urls)),

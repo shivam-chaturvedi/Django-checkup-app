@@ -2,6 +2,7 @@
 from django.contrib import admin
 from Api.models import *
 
+
 class Admin_Actions(admin.ModelAdmin):
     actions=['soft_del','restore']    
     
@@ -35,14 +36,14 @@ class Admin_Login(Admin_Actions):
 @admin.register(Patient)
 class Admin_Patient(Admin_Actions):
     ordering=["id"]
-    list_display=['id','created_at','updated_at','is_deleted','Unique_Id','First_name',"Middle_name","Last_name",'Date_Of_Birth','Gender','Phone','Email']
+    list_display=['id','created_at','updated_at','is_deleted','Unique_Id','First_name',"Middle_name","Last_name",'Date_Of_Birth','Gender','Phone','Email','Address','Age']
     #list_display=[field.name for field in Patient._meta.get_fields()]
+    
 
 @admin.register(AppointmentList)
 class Admin_AppointmentList(Admin_Actions):
     ordering=["id"]
-    list_display=[field.name for field in AppointmentList._meta.get_fields()]
-
+    list_display=['id','created_at','updated_at','is_deleted','Patient','Date','Time','Condition','Shift',"Appointment_type",'Note']   
 
 @admin.register(Prescription)
 class Admin_Prescription(Admin_Actions):

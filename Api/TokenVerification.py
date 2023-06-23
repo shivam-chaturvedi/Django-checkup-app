@@ -12,7 +12,7 @@ from checkup import settings
 
 
 ACCESS_TOKEN_EXPIRY_MINUTES=1
-REFRESH_TOKEN_EXPIRY_DAYS=2
+REFRESH_TOKEN_EXPIRY_DAYS=30
 EMAIL=''
 
 #use this decorator to apply another decorator to all class methods
@@ -47,7 +47,7 @@ def generate_access_token(login):
 def generate_refresh_token(login):
     
     # Set the expiration time for the refresh token
-    refresh_token_expiry = datetime.utcnow() + timedelta(minutes=REFRESH_TOKEN_EXPIRY_DAYS)#days=REFRESH_TOKEN_EXPIRY_DAYS)
+    refresh_token_expiry = datetime.utcnow() + timedelta(days=REFRESH_TOKEN_EXPIRY_DAYS)#days=REFRESH_TOKEN_EXPIRY_DAYS)
 
     # Create the payload for the refresh token
     refresh_token_payload = {

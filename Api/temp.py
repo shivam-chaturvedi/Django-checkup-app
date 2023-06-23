@@ -96,3 +96,68 @@
 # data="shivam"
 # # print(make_password(data))
 # # print(check_password('shivam',"pbkdf2_sha256$600000$aeRMiYCdea4EMbHHfatNvU$l70dppxPjV0+xfAbACsJW2Z23kGN5IyvZS0l99hqfQ4="))
+# import hashlib
+# import random
+# import string
+# import time
+
+# def generate_code(phone_number):
+#     # Concatenate the phone number and timestamp to create a unique identifier
+#     identifier = phone_number + str(time.time())
+
+#     # Generate a hash using the identifier
+#     hash_value = hashlib.md5(identifier.encode()).hexdigest()
+#     print(hash_value)
+
+#     # Take the first 6 characters from the hash
+#     code = hash_value[:6]
+
+#     # Convert the code to uppercase to ensure alphanumeric characters
+#     code = code.upper()
+
+#     return code
+
+# # Example usage
+# phone_number = "1234567890"
+# code = generate_code(phone_number)
+# print("Generated Code:", code)
+
+
+# from faker import Faker
+
+# fake = Faker()
+
+# # Generate fake ID
+# fake_id = fake.uuid4()[:6]
+
+# # Generate fake name
+# fake_name = fake.name()
+
+# # Generate fake phone number
+# fake_phone_number = fake.phone_number()
+
+# # Generate fake date of birth
+# fake_dob = fake.date_of_birth(minimum_age=18, maximum_age=90)
+
+# # Generate fake email address
+# fake_email = fake.email()
+
+# # Print the generated information
+# print("ID:", fake_id)
+# print("Name:", fake_name)
+# print("Phone Number:", fake_phone_number)
+# print("Date of Birth:", fake_dob)
+# print("Email:", fake_email)
+
+import datetime
+import sys,os
+sys.path.append(os.path.abspath(os.path.dirname( os.path.join(__file__,''))))
+from Api.models import AppointmentList
+print(str(datetime.datetime.now()).split(" ")[0])
+# import faker
+# def generate_fake_data2():
+#     f=faker.Faker()
+#     for i in range(10):
+#         appointment=Patient.objects.create(Unique_Id=f.uuid4()[:6],First_name=f.name(),Date_Of_Birth=datetime.now().split(" ")[0],Gender="Male",Phone=f.fake_number(),Email=f.email())
+#         appointment.save()
+

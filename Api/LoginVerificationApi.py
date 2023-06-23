@@ -10,7 +10,6 @@ from Api.TokenVerification import generate_access_token,generate_refresh_token
 
 
 
-
 @csrf_exempt
 def Verify(request):
     if(request.method=='POST'):
@@ -34,8 +33,7 @@ def Verify(request):
                         'message': 'Login Successful!',
                     },
                     status=status.HTTP_200_OK
-                )
-                
+                )    
             else:
                 return JsonResponse({'error':'Wrong Password!'},status=status.HTTP_401_UNAUTHORIZED)
         except Login.DoesNotExist:
