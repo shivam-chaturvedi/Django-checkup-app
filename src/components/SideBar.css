@@ -1,9 +1,11 @@
 .sidebar {
   /* user-select: none; */
   /* for mobile devices */
-  @media(max-width:767px) {
+  @media(max-width:520px) {
     width:30vw;
     height:88vh;
+    position: fixed;
+    z-index: 10;
 }
 /* for laptops or desktop */
 @media(min-width:1024px) {
@@ -19,10 +21,10 @@
 .appointments {
   @media(max-width:767px) {
     top:10vh;
-    font-size:10px;
+    /* font-size:10%; */
 }
 
-
+font-size: 90%;
   cursor: pointer;
   width: 90%;
   height: 10%;
@@ -34,16 +36,23 @@
   overflow: hidden;
   align-items: center;
   justify-content: center;
+
+  
+  font-family: Inria Sans;
+font-weight: 500;
+line-height: 30px;
+letter-spacing: 0em;
+text-align: left;
 }
 
 
 .patient-details {
   @media(max-width:767px) {
     top:20vh;
-    font-size: 10px;
+    /* font-size: 10px; */
 }
 /* user-select: none; */
-
+font-size: 90%;
   cursor: pointer;
   width: 90%;
   height: 10%;
@@ -55,6 +64,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: Inria Sans;
+font-weight: 500;
+line-height: 30px;
+letter-spacing: 0em;
+text-align: left;
+
 }
 .appointments:hover {
   background-color: rgba(7, 181, 132, 0.100); 
@@ -67,10 +82,10 @@
  
 img {
  
-  width: 30px;
+  width: 30%;
   height: 30px;
   margin-top: 1%;
-  padding: 2px;
+  padding: 5px;
   border-radius: 40%;
 } 
 #calendar{

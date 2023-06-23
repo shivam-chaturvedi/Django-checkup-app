@@ -9,7 +9,7 @@
     left: 47%;
   
     border-radius: 50%;
-    /* z-index: 10; */
+    z-index: 10;
     animation: spin 1s infinite linear;
   }
   

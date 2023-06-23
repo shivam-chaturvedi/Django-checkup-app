@@ -3,6 +3,7 @@ import Content from "./Content";
 import "./AppointmentsList.css";
 import search_image from "../components/images/search_image.png";
 import { DOMAIN_NAME } from "./main-pages/config";
+import Buffering from "../components/main-pages/Buffering";
 
 function convertTo24HourFormat(time) {
   const [hour, minute] = String(time).slice(0, -2).split(":");
@@ -19,6 +20,7 @@ function convertTo24HourFormat(time) {
 function AppointmentsList(props) {
   const [list, setlist] = useState([]);
   const [filteredlist, setfilteredlist] = useState(list);
+  const [buffering, setbuffering] = useState(false);
 
   function onContentClick(appointment_id, patient_id) {
     props.onContentClick(appointment_id, patient_id);
@@ -48,6 +50,7 @@ function AppointmentsList(props) {
   };
 
   const fetchAppointments = async () => {
+    setbuffering(true);
     try {
       const currentdate = new Date();
       let date =
@@ -73,27 +76,32 @@ function AppointmentsList(props) {
         });
 
         // console.log(sortedAppointments)
+
+        setbuffering(false);
+
         setlist(sortedAppointments);
         setfilteredlist(sortedAppointments);
         // console.log(sortedAppointments);
 
-        if (sortedAppointments !== []) {
-          if(sessionStorage.getItem('first_loaded')==="true"){
+        if (sortedAppointments.length!==0) {
+          if (sessionStorage.getItem("first_loaded") === "true") {
             sessionStorage.setItem(
               "defaultPatient",
               sortedAppointments[0].Patient.id
             );
-            
-            sessionStorage.setItem('first_loaded',false);
+            sessionStorage.setItem('appointment_id',sortedAppointments[0].id);
+
+            sessionStorage.setItem("first_loaded", false);
           }
-          
         } else {
-          console.log("empty");
+          console.log("No Appointments Today");
         }
       } else {
+        setbuffering(false);
         console.log(resData["error"]);
       }
     } catch (error) {
+      setbuffering(false);
       console.log(error);
     }
   };
@@ -120,31 +128,37 @@ function AppointmentsList(props) {
         <span>ID</span>
         <span>Condition</span>
       </div>
-      {filteredlist.length === 0 ? (
-        <h1 id="empty-array-msg">No Appointments!</h1>
+      {buffering ? (
+        <Buffering />
       ) : (
-        <div className="container">
-          {filteredlist.map((item, index) => (
-            <Content
-              appointments_list={list}
-              fetchAppointments={fetchAppointments}
-              onContentClick={onContentClick}
-              key={index}
-              name={
-                item.Patient.First_name +
-                " " +
-                item.Patient.Middle_name +
-                " " +
-                item.Patient.Last_name
-              }
-              time={item.Time}
-              date={item.Date}
-              id={item.id}
-              patient_id={item.Patient.id}
-              Unique_Id={item.Patient.Unique_Id}
-              condition={item.Condition}
-            />
-          ))}
+        <div>
+          {filteredlist.length === 0 ? (
+            <h1 id="empty-array-msg">No Appointments!</h1>
+          ) : (
+            <div className="container">
+              {filteredlist.map((item, index) => (
+                <Content
+                  appointments_list={list}
+                  fetchAppointments={fetchAppointments}
+                  onContentClick={onContentClick}
+                  key={index}
+                  name={
+                    item.Patient.First_name +
+                    " " +
+                    item.Patient.Middle_name +
+                    " " +
+                    item.Patient.Last_name
+                  }
+                  time={item.Time}
+                  date={item.Date}
+                  id={item.id}
+                  patient_id={item.Patient.id}
+                  Unique_Id={item.Patient.Unique_Id}
+                  condition={item.Condition}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>

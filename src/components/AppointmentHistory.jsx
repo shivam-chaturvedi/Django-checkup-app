@@ -4,6 +4,7 @@ import AppointmentContentX from "./AppointmentContentX";
 
 export default function AppointmentHistory(props) {
   const [previousAppointments, setpreviousAppointments] = useState([]);
+  
   useEffect(() => {
     if(!props.appointments){
       setpreviousAppointments([]);
@@ -14,6 +15,9 @@ export default function AppointmentHistory(props) {
     
     // console.log(previousAppointments);
   }, [props]);
+  
+  
+  
 
   return (
     <div className="aparent">
@@ -22,7 +26,7 @@ export default function AppointmentHistory(props) {
         <div className="scrollbar">
           {previousAppointments.map((item, index) => {
             // console.log(item.Date,item.Time);
-            return <AppointmentContentX key={index} date={item.Date} time={item.Time}/>;
+            return <AppointmentContentX disableNote={(item.Note==="")?true:false} handleNoteClick={()=>props.handleNoteClick(item.id)} key={index} date={item.Date} time={item.Time}/>;
           })}
         </div>
       </div>

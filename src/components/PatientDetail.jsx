@@ -7,15 +7,25 @@ import AppointmentHistory from "./AppointmentHistory";
 import TextEditor from "./main-pages/TextEditor";
 import { convertTo24HourFormat } from "./AppointmentsList";
 import { DOMAIN_NAME } from "./main-pages/config";
+import Buffering from "./main-pages/Buffering";
+import { useMediaQuery } from "react-responsive";
+import ServerError from "./main-pages/ServerError";
 
 export default function PatientDetail(props) {
   const [isTextEditorVisible, setIsTextEditorVisible] = useState(false);
   const [patientDetails, setpatientDetails] = useState(props.patientDetails);
+  const [servererror, setservererror] = useState(false);
+  const [NoteForAppointment,setNoteForAppointment]=useState('');
+  const [NoteChanged,setNoteChanged]=useState(false);
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  
+
   const [appointment_history, setappointment_history] = useState(
     props.appointment_history
   );
   // eslint-disable-next-line
   const [isAppointmentsEmpty, setisAppointmentsEmpty] = useState(false);
+  const [buffering, setbuffering] = useState(false);
   const textEditorRef = useRef(null);
 
   const handleSaveTextEditor = () => {
@@ -30,9 +40,7 @@ export default function PatientDetail(props) {
     let past = 0;
     let upcoming = 0;
     try {
-      const response = await fetch(
-        DOMAIN_NAME + "/api/patient/details?id=" + patient_id
-      );
+      const response = await fetch(DOMAIN_NAME + "/api/patient/" + patient_id);
       const resData = await response.json();
       if (response.ok) {
         setpatientDetails(resData["success"]);
@@ -47,24 +55,32 @@ export default function PatientDetail(props) {
             upcoming++;
           }
         }
+        setbuffering(false);
         // console.log(past,upcoming);
         setappointment_history({
           upcomingAppointments: upcoming,
           pastAppointments: past,
         });
       } else {
-        console.log(resData["error"]);
+        setbuffering(false);
+        // console.log(resData["error"]);
+        setservererror(true);
       }
     } catch (error) {
-      console.log(error);
+      setbuffering(false);
+      // console.log(error);
+      setservererror(true);
     }
   };
 
   useEffect(() => {
-    if (!props.patient_id) {//props is null when we directly click on content button ain appointments list
+    if (!props.patient_id) {
+      //props is null when we directly click on content button ain appointments list
       const patient_id = sessionStorage.getItem("defaultPatient");
+      // const appointment_id=sessionStorage.getItem('appointment_id');
       // console.log(patient_id);
       if (patient_id) {
+        setbuffering(true);
         fetchData(patient_id);
       } else {
         setisAppointmentsEmpty(true);
@@ -74,8 +90,8 @@ export default function PatientDetail(props) {
     const handleUnload = () => {
       // console.log(props.setAppointmentPage);
       props.setAppointmentPage(false);
-      
-      sessionStorage.setItem('first_loaded',true);
+
+      // sessionStorage.setItem("first_loaded", true); //it is done so everytime on refreshing the page appointment list comes again and filters also
       // sessionStorage.setItem('AppointmentPage',false);
     };
     document.addEventListener("mousedown", handleMouseDown);
@@ -96,35 +112,99 @@ export default function PatientDetail(props) {
     }
   };
 
+  const handleNoteClick=async (appoinment_id)=>{
+    setNoteChanged(!NoteChanged);
+    let id=appoinment_id;
+    try{
+      // console.log(appointment_id);
+    const response=await fetch(DOMAIN_NAME+'/api/appointment/note/get/'+id);
+    const resData=await response.json();
+    if(response.ok){
+      let temp=resData['success'];
+      
+      temp = temp
+        .replace(/&nbsp;/g, " ")
+        .replace(/&#9;/g, "\t")
+        .replace(/<br>/g, "\n");
+      setNoteForAppointment(temp);
+    }
+    else{
+      console.log(resData['error']);
+    }
+  }catch(error){
+    console.log(error);
+  }
+}
+
+const handleNoteSave=()=>{
+  //do here stuff when note save button is clicked
+}
+
   return (
     <>
-      {isTextEditorVisible && (
-        <div ref={textEditorRef}>
-          <TextEditor onSave={handleSaveTextEditor} />
-        </div>
-      )}
-      {isAppointmentsEmpty?<h1 id="no-appointments-msg">No Appointments!<br/>Patient Not Found</h1>:
-        <div
-          style={isTextEditorVisible ? { filter: "blur(5px)" } : null}
-          className="parent"
-        >
-          <button onClick={handleClick}>Add Prescription</button>
-          <div>
-            <div className="two">
-              <History
-                name={String(patientDetails.First_name + patientDetails.Last_name)}
-                unique_id={patientDetails.Unique_Id}
-                upcoming={appointment_history.upcomingAppointments}
-                past={appointment_history.pastAppointments}
-              />
-              <Details details={patientDetails} />
-              <Notes />
+      {servererror ? (
+        <ServerError />
+      ) : (
+        <>
+          {isTextEditorVisible && (
+            <div ref={textEditorRef}>
+              <TextEditor onSave={handleSaveTextEditor} />
             </div>
-            <AppointmentHistory appointments={patientDetails.appointments} />
-          </div>
-        </div>
-}
-      
+          )}
+          {buffering ? (
+            <Buffering />
+          ) : (
+            <>
+              {isAppointmentsEmpty ? (
+                <h1 id="no-appointments-msg">
+                  No Appointments!
+                  <br />
+                  Patient Not Found
+                </h1>
+              ) : (
+                <div
+                  style={isTextEditorVisible ? { filter: "blur(5px)" } : null}
+                  className="parent"
+                >
+                  {isMobile ? (
+                    <div className="buttons-on-top">
+                      <button
+                        id="button1"
+                        onClick={() => props.setAppointmentPage(true)}
+                      >
+                        Go Back
+                      </button>
+                      <button id="button2" onClick={handleClick}>
+                        Add Prescription
+                      </button>
+                    </div>
+                  ) : (
+                    <button onClick={handleClick}>Add Prescription</button>
+                  )}
+                  <div>
+                    <div className="two">
+                      <History
+                        name={String(
+                          patientDetails.First_name + patientDetails.Last_name
+                        )}
+                        unique_id={patientDetails.Unique_Id}
+                        upcoming={appointment_history.upcomingAppointments}
+                        past={appointment_history.pastAppointments}
+                      />
+                      <Details details={patientDetails} />
+                      <Notes handleNoteSave={handleNoteSave} APPOINTMENT_ID={props.appointment_id} NoteChanged={NoteChanged} NoteForAppointment={NoteForAppointment} />
+                    </div>
+                    <AppointmentHistory
+                    handleNoteClick={(id)=>handleNoteClick(id)}
+                      appointments={patientDetails.appointments}
+                    />
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </>
+      )}
     </>
   );
 }

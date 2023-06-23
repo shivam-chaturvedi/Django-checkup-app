@@ -2,10 +2,12 @@ import React, { useEffect,useState } from "react";
 import "./SideBar.css";
 import calendar from "../components/images/calendar.png";
 import person from "../components/images/person.png";
+import { useMediaQuery } from 'react-responsive';
 
 const SideBar = ({ onAppointmentButton, onDetailsButton ,setDetailButtonState}) => {
-  const [activeButton, setactiveButton] = useState(true);
-
+  //sessionStorage.getItem('AppointmentPage')==="true" is done so when refreshing the page the button active state not jumps and stays more focused
+  const [activeButton, setactiveButton] = useState((sessionStorage.getItem('AppointmentPage')==="true" || !sessionStorage.getItem('AppointmentPage')));
+  const isMobile = useMediaQuery({ maxWidth: 520 });
   useEffect(()=>{
     setDetailButtonState(setactiveButton);
     if(sessionStorage.getItem('AppointmentPage')==="false"){
@@ -20,10 +22,11 @@ const SideBar = ({ onAppointmentButton, onDetailsButton ,setDetailButtonState}) 
   };
   const handleDetailsButton = () => {
     setactiveButton(false);
+    sessionStorage.setItem('AppointmentPage',false);
     onDetailsButton();
   };
   return (
-    <div className="sidebar">
+    <div className="sidebar" style={isMobile?{display:"none"}:{display:"auto"}}>
       <div
         style={
           activeButton

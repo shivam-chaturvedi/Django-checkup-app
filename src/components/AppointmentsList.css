@@ -1,8 +1,9 @@
 
 .container {
   @media (max-width: 767px) {
-    width: 70vw;
+    width: 96vw;
     height: 60vh;
+    border-radius: 4px;
   }
   width: 80vw;
   height: 60vh;
@@ -26,7 +27,7 @@
 }
 .titles {
   @media (max-width: 767px) {
-    width: 90%;
+    width: 90vw;
     font-size: 10px;
     justify-content: space-evenly;
   }
@@ -62,7 +63,7 @@
 }
 .search-bar {
   @media (max-width: 767px) {
-    width: 90%;
+    width: 90vw;
     font-size: 14px;
     margin-top: 1vh;
     margin-bottom: 3vh;
@@ -123,8 +124,8 @@
   position: absolute;
   @media (max-width:767px) {
     position: absolute;
-    /* left:10%; */
-    /* top:20%; */
+    left:10%;
+    top:40%;
   }
   left:43%;
   top:51%;

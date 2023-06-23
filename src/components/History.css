@@ -18,11 +18,14 @@
     text-align: center;
     @media (max-width:767px) {
       width: 30%;
-      height: 80%;
+      /* height: 90%; */
+      padding: 2%;
+      max-height: 28vh;
       /* font-size: 100%; */
-      margin: 1%;
+      /* margin: 1%; */
       margin-right: 2%;
       margin-left: 2%;
+      /* border: 1px solid; */
       border-radius: 5px;
       
   }
@@ -31,6 +34,7 @@
   #his-name {
     @media (max-width:767px) {
       font-size: 10px;
+      /* margin: 0px; */
       
   }
     
@@ -54,7 +58,8 @@
   }
   #his-appointments{
     @media (max-width:767px) {
-      /* font-size: 10px; */
+      font-size: 10px;
+    font-weight: bold;
       margin-top: 2%;
       
   }

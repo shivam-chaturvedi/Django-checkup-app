@@ -6,7 +6,7 @@ import line from '../components/images/Line 4.png';
 import ellipse2 from '../components/images/Ellipse 8.png';
 
 
-export default function AppointmentContentX({date,time}){
+export default function AppointmentContentX({date,time,handleNoteClick,disableNote=false}){
     const [ellipse_image,setImage]=useState(ellipse);
     return (
         <div onMouseOver={()=>setImage(ellipse2)} onMouseOut={()=>setImage(ellipse)} className="appoinment-content-x">
@@ -15,7 +15,7 @@ export default function AppointmentContentX({date,time}){
             <img id="ellipse" src={ellipse_image} alt="elippse"/>
             <img id="line" src={line} alt="line"/>
             </div> 
-            <AppointmentContent date={date} time={time}/>
+            <AppointmentContent disableNote={disableNote} handleNoteClick={handleNoteClick} date={date} time={time}/>
         </div>
     );
 }

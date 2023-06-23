@@ -6,6 +6,7 @@ import AppointmentsList from "../AppointmentsList";
 import PatientDetails from "../PatientDetail";
 import { convertTo24HourFormat } from "../AppointmentsList";
 import { DOMAIN_NAME } from "./config";
+import Buffering from "./Buffering";
 
 const Home = () => {
   const [AppointmentPage, setAppointmentPage] = useState(true);
@@ -13,6 +14,7 @@ const Home = () => {
   const [patientData, setpatientData] = useState({});
   const [pastAppointments, setpastAppointments] = useState(0);
   const [upcomingAppointments, setupcomingAppointments] = useState(0);
+  const [buffering,setbuffering]=useState(false);
   let   DetailButtonState=useRef(null);
 
   useEffect(()=>{
@@ -44,7 +46,7 @@ const Home = () => {
     let upcoming=0;
     try {
       const response = await fetch(
-        DOMAIN_NAME+"/api/patient/details?id=" + patient_id
+        DOMAIN_NAME+"/api/patient/" + patient_id
       );
       const resData = await response.json();
       if (response.ok) {
@@ -61,12 +63,17 @@ const Home = () => {
           }
         }
         // console.log(past,upcoming);
+        
+      setbuffering(false);
         setpastAppointments(past);
         setupcomingAppointments(upcoming);
       } else {
+        
+      setbuffering(false);
         console.log(resData["error"]);
       }
     } catch (error) {
+      setbuffering(false);
       console.log(error);
     }
   };
@@ -74,6 +81,7 @@ const Home = () => {
   const onContentClick = async (appointment_id, patient_id) => {
     // console.log(appointment_id,patient_id);
     setContentData({ appointment_id: appointment_id, patient_id: patient_id });
+    setbuffering(true);
     await fetchData(patient_id);
     sessionStorage.setItem('defaultPatient',patient_id);
     handleDetailsButton();
@@ -111,7 +119,10 @@ const Home = () => {
           onDetailsButton={handleDetailsButton}
         />
         {AppointmentPage ? (
+          <>
+          {buffering?<Buffering/>:null}
           <AppointmentsList onContentClick={onContentClick} />
+          </>
         ) : (
           <PatientDetails
             setAppointmentPage={setAppointmentPage}
