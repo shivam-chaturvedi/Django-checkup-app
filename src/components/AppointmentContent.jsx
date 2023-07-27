@@ -8,6 +8,7 @@ export default function AppointmentContent({
   time,
   handleNoteClick,
   disableNote=false,
+  handlePrint
 }) {
   return (
     <div className="appointment-content">
@@ -30,7 +31,9 @@ export default function AppointmentContent({
             >
               Note
             </span>
-        <img style={disableNote?{width:"80%"}:null} id="print" src={print} alt="print" />
+        <img onClick={()=>{
+          handlePrint()
+        }} style={disableNote?{width:"80%"}:null} id="print" src={print} alt="print" />
       </div>
     </div>
   );

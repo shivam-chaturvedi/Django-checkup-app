@@ -28,10 +28,7 @@ export default function PatientDetail(props) {
   const [buffering, setbuffering] = useState(false);
   const textEditorRef = useRef(null);
 
-  const handleSaveTextEditor = () => {
-    setIsTextEditorVisible(false);
-  };
-
+  
   const handleClick = () => {
     setIsTextEditorVisible(true);
   };
@@ -140,6 +137,35 @@ const handleNoteSave=()=>{
   //do here stuff when note save button is clicked
 }
 
+const handleSaveTextEditor =async (prescription) => {
+  setIsTextEditorVisible(false);
+  try{
+    let id=props.appointment_id
+    console.log(prescription);
+    // console.log(id);
+    if(!id){
+    id=sessionStorage.getItem("appointment_id");
+    }
+    const response=await fetch(DOMAIN_NAME+"/api/save/prescription/"+id,{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify({prescription:prescription})
+    });
+    const resdata=await response.json();
+    if(response.ok){
+      console.log(resdata["success"]);
+    }
+    else{
+      console.log(resdata["error"]);
+    }
+  }catch(error){
+    console.error(error);
+  }
+};
+
+
   return (
     <>
       {servererror ? (
@@ -148,7 +174,8 @@ const handleNoteSave=()=>{
         <>
           {isTextEditorVisible && (
             <div ref={textEditorRef}>
-              <TextEditor onSave={handleSaveTextEditor} />
+              <TextEditor onSave={(prescription)=>{
+                handleSaveTextEditor(prescription)}} />
             </div>
           )}
           {buffering ? (

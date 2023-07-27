@@ -11,8 +11,32 @@ const TextEditor = ({ onSave }) => {
     setContent(value);
   };
 
-  const handleSave = (e) => {
-    onSave();
+  const handleSave = async (e) => {
+  //   let temp=content.replaceAll("<p>",'').replaceAll("</p>","<&#new>").replaceAll("\t","<&#tab>").replaceAll(" ","<&#space>").replaceAll("<br>","");
+  // // temp
+  // temp=temp.split("<&#new>")
+
+  // temp=temp.filter((item)=>{
+  //   if(item!==""){
+  //     return item;
+  //   }
+  //   return null;
+  // })
+  // temp=temp.join("<&#new>");
+  // console.log(temp);
+  let temp=content.replaceAll("</p>","{br}").replaceAll("\t","").replace(/<[^>]+>/g, '').split("{br}");
+ temp=temp.filter((item)=>{
+  if(item!==""){
+    return true;
+  }
+  else{
+    return false;
+  }
+ })
+//  temp=temp.join("{br}");
+
+  // console.log(temp);
+   onSave(temp);
   };
 
   const modules = {
@@ -23,7 +47,7 @@ const TextEditor = ({ onSave }) => {
         ["bold", "italic", "underline", "strike"],
         [{ list: "ordered" }, { list: "bullet" }],
         [{ indent: "-1" }, { indent: "+1" }],
-        ["link", "image"],
+        ["link"],
         ["clean"],
       ],
       // handlers: {
