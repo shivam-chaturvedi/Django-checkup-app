@@ -1,11 +1,12 @@
-from Api.models import AppointmentList
-from django.http import JsonResponse,FileResponse
+from Api.models import AppointmentList,Prescription
+from django.http import JsonResponse,FileResponse,HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from Api.serializers import AppointmentList_Serializer
 from rest_framework import status
 import io
 from reportlab.pdfgen import canvas
 from rest_framework.parsers import JSONParser
+from Api import pdfgen
 
 @csrf_exempt
 def list(req):
@@ -61,28 +62,60 @@ def get_note(req,pk=None):
     return JsonResponse({'error':'please,use GET method'},status=status.HTTP_400_BAD_REQUEST)
 
 @csrf_exempt
-def generate_pdf(request):
-    if(request.method=='GET'):
+def save_prescription(req,pk):
+    if(req.method=="POST"):
         try:
-            buffer = io.BytesIO()
-            # Create the PDF content
-            p = canvas.Canvas(buffer)
-            p.drawString(100, 750, "Hello, World!")
+            data=JSONParser().parse(io.BytesIO(req.body))
+            
+            #to ensure updation of prescriptions
+            try:
+                prescription=Prescription.objects.get(Appointment__id=pk)
+                prescription.Prescribed_medicines=data["prescription"]
+                prescription.save()
+            except Prescription.DoesNotExist:
+                prescription=Prescription()
+                prescription.Appointment=AppointmentList.objects.get(id=pk)
+                prescription.Prescribed_medicines=data["prescription"]
+                prescription.save()
 
-            # Save the PDF
-            p.showPage()
-            p.save()
+            return JsonResponse({"success":"prescription saved!"},status=status.HTTP_200_OK)
+        except Exception as e:
+            return JsonResponse({"error":str(e)},status=status.HTTP_400_BAD_REQUEST)
+    return JsonResponse({"error":"please,use post method"},status=status.HTTP_400_BAD_REQUEST)
 
+@csrf_exempt
+def generate_pdf(request,pk):
+    if(request.method=='GET'):
+        try:   
+            appointment=AppointmentList.objects.get(id=pk)
+            name=appointment.Patient.First_name
+            date=str(appointment.Date)
+            address=str(appointment.Patient.Address)
+            dob=str(appointment.Patient.Date_Of_Birth)
+            phone=str(appointment.Patient.Phone)
+            doctor_name="Doctor's name"
+            clinic_name="Supersize Health Clinic"
+            clinic_addr="123 Main Street, Big City, Upstate 110101"
+            clinic_phone="+91 4536453643"
+            try:
+                prescription=Prescription.objects.get(Appointment=appointment)
+                prescription=str(prescription.Prescribed_medicines)
+            except Prescription.DoesNotExist as e:
+                prescription="[]"
+            pdf=pdfgen.generate_pdf(name,date,address,dob,phone,doctor_name,clinic_name,clinic_addr,clinic_phone,prescription)
             # Retrieve the value from BytesIO
-            pdf_data = buffer.getvalue()
-            buffer.close()
+            pdf_data = pdf.getvalue()#to get the bytesio buffer data
+            pdfgen.clean()#to close the buffer
+            
+            #to make a name of pdf with appointment date and time
+            filename=f"application_{appointment.Date}_{appointment.Time}.pdf"
 
             # Create the FileResponse object with PDF data
-            response = FileResponse(pdf_data, content_type='application/pdf')
-            response['Content-Disposition'] = 'attachment; filename="generated_pdf.pdf"'
+            response = HttpResponse(pdf_data, content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
             return response
         except Exception as e:
-            return JsonResponse()
+            return JsonResponse({'error':str(e)},status=status.HTTP_400_BAD_REQUEST)
 
 
 

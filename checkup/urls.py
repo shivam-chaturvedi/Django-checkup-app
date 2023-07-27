@@ -30,6 +30,8 @@ router.register('api/Pharmacy_stock',views.Pharmacy_stockAPI,basename='pharmacy_
 
 urlpatterns = [
     path('api/appointments',AppointmentListApi.list),
+    path('api/appointment/pdf/<int:pk>',AppointmentListApi.generate_pdf),
+    path('api/save/prescription/<int:pk>',AppointmentListApi.save_prescription),
     path('api/appointment/note/save/<int:pk>',AppointmentListApi.save_note),
     path('api/appointment/note/get/<int:pk>',AppointmentListApi.get_note),
     path('api/patient/<int:pk>',PatientDetailApi.get_patient),

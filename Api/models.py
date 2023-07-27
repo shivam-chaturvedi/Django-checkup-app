@@ -123,6 +123,7 @@ class AppointmentList(Base):
 class Prescription(Base):
     Appointment=models.ForeignKey(AppointmentList,on_delete=models.CASCADE)
     Prescribed_medicines=models.TextField(default="No Medicine Prescribed")
+
     def __str__(self) -> str:
          return self.Prescribed_medicines
 

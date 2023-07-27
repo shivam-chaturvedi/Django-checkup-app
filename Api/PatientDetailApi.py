@@ -1,4 +1,4 @@
-from Api.models import Patient
+from Api.models import Patient,Prescription
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from Api.serializers import Patient_Serializer
@@ -8,6 +8,7 @@ from datetime import datetime
 import faker,random
 from faker import Faker
 import uuid
+# import ast
 
 
 def generate_random_address():
